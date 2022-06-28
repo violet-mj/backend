@@ -6,5 +6,5 @@ export declare class AuthController {
     login(req: Request): Promise<{
         access_token: string;
     }>;
-    authHello(): string;
+    authHello(req: Request): string;
 }

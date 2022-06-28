@@ -14,12 +14,14 @@ let UsersService = class UsersService {
             {
                 userId: 1,
                 username: 'john',
-                password: '1234'
+                password: '1234',
+                role: ['admin', 'user']
             },
             {
                 userId: 2,
                 username: 'maria',
-                password: '2345'
+                password: '2345',
+                role: ['user']
             }
         ];
     }

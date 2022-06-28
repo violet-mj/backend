@@ -21,7 +21,7 @@ export class AuthService {
 
     // jwt Access Token 생성함수
     async login(user: any) {
-        const payload = {username: user.username, sub: user.userId}
+        const payload = {username: user.username, sub: user.userId, role: user.role}
         return {
             access_token: this.jwtService.sign(payload)
         }

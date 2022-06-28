@@ -16,6 +16,10 @@ exports.AuthController = void 0;
 const common_1 = require("@nestjs/common");
 const auth_service_1 = require("./auth.service");
 const local_auth_guard_1 = require("./local-auth.guard");
+const roles_decorator_1 = require("../roles/roles.decorator");
+const roles_enum_1 = require("../roles/roles.enum");
+const jwt_auth_guard_1 = require("./jwt-auth.guard");
+const roles_guard_1 = require("../roles/roles.guard");
 let AuthController = class AuthController {
     constructor(authService) {
         this.authService = authService;
@@ -23,7 +27,8 @@ let AuthController = class AuthController {
     login(req) {
         return this.authService.login(req.user);
     }
-    authHello() {
+    authHello(req) {
+        console.log(req.user);
         return 'hello';
     }
 };
@@ -36,9 +41,13 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], AuthController.prototype, "login", null);
 __decorate([
+    (0, common_1.UseGuards)(roles_guard_1.RolesGuard),
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
+    (0, roles_decorator_1.Roles)(roles_enum_1.Role.Admin),
     (0, common_1.Get)('/hello'),
+    __param(0, (0, common_1.Req)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
 ], AuthController.prototype, "authHello", null);
 AuthController = __decorate([
