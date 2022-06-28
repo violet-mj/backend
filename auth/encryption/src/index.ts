@@ -9,13 +9,28 @@
 
 import crypto from 'crypto'
 
-const key = crypto.randomBytes(32)
-const iv = crypto.randomBytes(16)
-const cipher = crypto.createCipheriv('aes256', key, iv)
+let algorithm = 'aes-256-ctr'
+const key = Buffer.alloc(32)
+key.fill(0)
+const iv = Buffer.alloc(16)
+iv.fill(0)
 
-let hash = cipher.update('hello world', 'utf-8', 'hex')
-hash = hash + cipher.final('hex')
-console.log(hash)
+const encrypt = (text: string) => {
+  const cipher = crypto.createCipheriv(algorithm, key, iv)
+  let crypted = cipher.update(text, 'utf-8', 'base64')
+  crypted += cipher.final('base64')
+  return crypted
+}
 
-const plainText = crypto.createDecipheriv('aes256', key, iv)
-console.log(plainText)
+
+const decrypt = (text: string) => {
+  const cipher = crypto.createDecipheriv(algorithm, key, iv)
+  let crypted = cipher.update(text, 'base64', 'utf-8')
+  crypted += cipher.final('utf-8')
+  return crypted
+}
+
+let encrypted = encrypt('mypassword')
+console.log(encrypted)
+let decrypted = decrypt(encrypted)
+console.log(decrypted)
