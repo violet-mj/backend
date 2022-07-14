@@ -1,5 +1,9 @@
 const express = require('express')
 const { ApolloServer, gql} = require('apollo-server-express')
+const { PubSub } = require('graphql-subscriptions')
+const { faker } = require("@faker-js/faker")
+
+const pubSub = new PubSub()
 
 const typeDefs = gql`
   type Query {
@@ -10,6 +14,10 @@ const typeDefs = gql`
     name: String
     cc: Int
     sort: String
+  }
+
+  type Subscription {
+    newCar: Car!
   }
 
 `
@@ -29,6 +37,11 @@ const resolvers = {
           sort: 'suv'
         }
       ]
+    }
+  },
+  Subscription: {
+    newCar: {
+
     }
   }
 }
@@ -51,3 +64,9 @@ async function startApolloServer(typeDefs, resolvers) {
 }
 
 startApolloServer(typeDefs, resolvers)
+
+for(let i; i < 10; i++) {
+  pubSub.publish("messageAdded", {
+      messageAdded: faker.lorem.sentence()
+  })
+}

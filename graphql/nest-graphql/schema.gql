@@ -1,0 +1,64 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+directive @upper on FIELD_DEFINITION
+
+directive @lower on FIELD_DEFINITION
+
+type Animal implements AnimalIdentifier {
+  id: ID!
+  name: String!
+  isFly: Boolean!
+  averagesize: Int!
+  people: [People!]
+}
+
+interface AnimalIdentifier {
+  id: ID!
+  name: String!
+}
+
+type People {
+  id: ID!
+  name: String!
+  ownAnimalId: Float!
+  age: Int!
+}
+
+type Query {
+  getOdd: Odd!
+  animals: [Animal!]!
+  animal(id: Int!): Animal!
+  hello: String!
+  musics: [Music!]!
+}
+
+"""A Simple Odd Number validator"""
+scalar Odd
+
+union Music = Classic | Pop
+
+type Classic {
+  id: ID!
+  name: String!
+  length: String!
+  createdAt: Int!
+}
+
+type Pop {
+  id: ID!
+  title: String!
+  artist: String!
+  length: String!
+  createdAt: Int!
+}
+
+type Mutation {
+  createAnimal(name: String!, isFly: Boolean!, averagesize: Int!): Animal!
+  updateAnimal(name: String!, isFly: Boolean, averagesize: Int): Animal!
+}
+
+type Subscription {
+  animalSub: Animal!
+}

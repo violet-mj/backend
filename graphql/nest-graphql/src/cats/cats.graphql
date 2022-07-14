@@ -1,0 +1,20 @@
+type Animal {
+  id: ID!
+  name: String!
+  isFly: Boolean!
+  averagesize: Int!
+  people: [People]
+}
+
+type People {
+  id: ID!
+  name: String
+  ownAnimalId: Int
+  age: Int
+}
+
+type Query {
+ animals: [Animal]
+ animal(id: Int!): Animal
+ hello: String
+}
